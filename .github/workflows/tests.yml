@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        bpy: ["4.2.*", "4.5.*", "5.0.*"]
+    name: Blender ${{ matrix.bpy }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: System libraries for bpy
+        run: sudo apt-get update && sudo apt-get install -y libxxf86vm1 libxfixes3 libxi6 libxkbcommon0 libsm6 libgl1
+      - run: pip install "bpy==${{ matrix.bpy }}"
+      - run: python tests/run_tests.py
+      - run: python build.py
+      - uses: actions/upload-artifact@v4
+        if: matrix.bpy == '4.2.*'
+        with:
+          name: camera_flight-extension
+          path: dist/*.zip

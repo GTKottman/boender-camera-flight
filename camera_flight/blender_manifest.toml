@@ -1,0 +1,21 @@
+schema_version = "1.0.0"
+
+id = "camera_flight"
+version = "1.0.0"
+name = "Camera Flight"
+tagline = "Fly the camera with game controls and record takes mid-flight"
+maintainer = "GTKottman"
+type = "add-on"
+website = "https://github.com/GTKottman/boender-camera-flight"
+tags = ["Camera", "Animation", "3D View"]
+
+blender_version_min = "4.2.0"
+
+# Blender add-ons that use its Python API must be GPL-compatible.
+license = ["SPDX:GPL-3.0-or-later"]
+
+[permissions]
+files = "Reads game controllers (/dev/input/js*) for gamepad support"
+
+[build]
+paths_exclude_pattern = ["__pycache__/", "*.pyc", "/tests/"]
